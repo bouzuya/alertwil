@@ -11,7 +11,8 @@
     "url": "https://github.com/bouzuya/alertwil/issues"
   },
   "devDependencies": {
-    "rimraf": "2.5.2"
+    "rimraf": "2.5.2",
+    "typescript": "1.8.10"
   },
   "files": [
     "./lib/"
@@ -25,6 +26,7 @@
     "url": "https://github.com/bouzuya/alertwil.git"
   },
   "scripts": {
+    "build": "tsc",
     "clean": "rimraf .tmp/ lib/"
   }
 }
