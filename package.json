@@ -39,6 +39,7 @@
     "build:ts": "tsc",
     "clean": "rimraf .tmp/ lib/",
     "copy:dts": "cpx '.tmp/es2015/src/**/*.d.ts' 'lib/'",
-    "copy:js": "cpx '.tmp/es5/src/**/*.js' 'lib/'"
+    "copy:js": "cpx '.tmp/es5/src/**/*.js' 'lib/'",
+    "prepublish": "npm-run-all -s 'clean' 'build'"
   }
 }
