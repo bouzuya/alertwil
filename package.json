@@ -1,0 +1,24 @@
+{
+  "name": "alertwil",
+  "description": "alertwil",
+  "version": "0.0.0",
+  "author": {
+    "name": "bouzuya",
+    "email": "m@bouzuya.net",
+    "url": "http://bouzuya.net/"
+  },
+  "bugs": {
+    "url": "https://github.com/bouzuya/alertwil/issues"
+  },
+  "files": [
+    "./lib/"
+  ],
+  "homepage": "https://github.com/bouzuya/alertwil#readme",
+  "keywords": [],
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bouzuya/alertwil.git"
+  }
+}
