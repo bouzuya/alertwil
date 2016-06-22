@@ -10,6 +10,9 @@
   "bugs": {
     "url": "https://github.com/bouzuya/alertwil/issues"
   },
+  "devDependencies": {
+    "rimraf": "2.5.2"
+  },
   "files": [
     "./lib/"
   ],
@@ -20,5 +23,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/bouzuya/alertwil.git"
+  },
+  "scripts": {
+    "clean": "rimraf .tmp/ lib/"
   }
 }
