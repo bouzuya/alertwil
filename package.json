@@ -53,7 +53,8 @@
     "clean": "rimraf .tmp/ lib/",
     "copy:dts": "cpx '.tmp/es2015/src/**/*.d.ts' 'lib/'",
     "copy:js": "cpx '.tmp/es5/src/**/*.js' 'lib/'",
-    "prepublish": "npm-run-all -s 'clean' 'build'",
+    "install:typings": "typings install",
+    "prepublish": "npm-run-all -s 'install:typings' 'clean' 'build'",
     "test": "beater"
   }
 }
