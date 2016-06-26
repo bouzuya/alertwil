@@ -31,7 +31,7 @@
     "power-assert": "1.4.1",
     "proxyquire": "1.7.9",
     "rimraf": "2.5.2",
-    "testdouble": "1.4.2",
+    "sinon": "1.17.4",
     "typescript": "1.8.10",
     "typings": "1.3.0"
   },
