@@ -1,3 +1,3 @@
-const add = (x: number, y: number): number => x + y;
+import { server } from './server';
 
-export { add };
+server();
