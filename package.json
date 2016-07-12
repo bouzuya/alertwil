@@ -60,6 +60,7 @@
     "copy:js": "cpx '.tmp/es5/src/**/*.js' 'lib/'",
     "install:typings": "typings install",
     "prepublish": "npm-run-all -s 'install:typings' 'clean' 'build'",
+    "start": "node ./lib/index.js",
     "test": "beater",
     "watch": "npm-run-all -p 'watch:*'",
     "watch:es2015": "npm run build:es2015 -- --watch",
