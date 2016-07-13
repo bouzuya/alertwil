@@ -1,5 +1,5 @@
 import * as koaRouter from 'koa-router';
-import { createAlert, showAlert, createAlertResult } from './controllers';
+import { createAlert, showAlert, createAlertResult } from './actions';
 
 const routes = (): any => {
   const router = koaRouter();
