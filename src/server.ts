@@ -1,5 +1,5 @@
 import * as koa from 'koa';
-import * as koaRouter from 'koa-router';
+import { routes } from './routes';
 
 type Response = {
   header: any;
@@ -71,27 +71,6 @@ type C = {
   respond: any;
 };
 
-// routes
-
-const router = koaRouter();
-router.post('/groups/:id/alerts', function* <T>(next: G<T>): G<G<T>> {
-  const groupId: string = this.params.id;
-  const context: C = this;
-  context.response.body = 'POST /groups/:id/alerts groupId=' + groupId;
-});
-
-router.get('/alerts/:id', function* <T>(next: G<T>): G<G<T>> {
-  const alertId: string = this.params.id;
-  const context: C = this;
-  context.response.body = 'GET /alerts/:id alertId=' + alertId;
-});
-
-router.post('/alerts/:id/results', function* <T>(next: G<T>): G<G<T>> {
-  const alertId: string = this.params.id;
-  const context: C = this;
-  context.response.body = 'POST /alerts/:id/results alertId=' + alertId;
-});
-
 const server = (): void => {
   const app = koa();
 
@@ -103,7 +82,7 @@ const server = (): void => {
     console.log('%s %s - %s', this.method, this.url, ms);
   });
 
-  app.use(router.routes());
+  app.use(routes());
 
   app.listen(3000);
 };
