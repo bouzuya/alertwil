@@ -1,18 +1,21 @@
-import { C } from './koa';
+import { G, C } from './koa';
 
-const createAlert = (groupId: string): void => {
+function* createAlert<T>(next: G<T>): G<G<T>> {
+  const groupId: string = this.params.id;
   const context: C = this;
   context.response.body = 'POST /groups/:id/alerts groupId=' + groupId;
-};
+}
 
-const showAlert = (alertId: string): void => {
+function* showAlert<T>(next: G<T>): G<G<T>> {
+  const alertId: string = this.params.id;
   const context: C = this;
   context.response.body = 'GET /alerts/:id alertId=' + alertId;
-};
+}
 
-const createAlertResult = (alertId: string): void => {
+function* createAlertResult<T>(next: G<T>): G<G<T>> {
+  const alertId: string = this.params.id;
   const context: C = this;
   context.response.body = 'POST /alerts/:id/results alertId=' + alertId;
-};
+}
 
 export { createAlert, showAlert, createAlertResult };
