@@ -1,3 +1,4 @@
+import { G, C } from './koa';
 import * as koaRouter from 'koa-router';
 
 const routes = (): any => {
