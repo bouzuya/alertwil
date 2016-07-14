@@ -19,7 +19,7 @@ function* createAlert<T>(next: G<T>): G<G<T>> {
   const alertRepository: AlertRepository = new AlertRepositoryImpl();
   const alertId = alertRepository.nextId();
   const alert = new Alert({ id: alertId, groupId });
-  // alert.call();
+  alert.call();
   alertRepository.save(alert);
   context.response.body = renderAlert(alert);
 }

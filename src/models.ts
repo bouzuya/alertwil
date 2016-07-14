@@ -14,6 +14,10 @@ export class Alert {
   get groupId(): GroupId {
     return this._groupId;
   }
+
+  call(): void {
+    // TODO: call twilio
+  }
 }
 
 export class AlertId {
