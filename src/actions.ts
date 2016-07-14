@@ -5,6 +5,7 @@ import {
 } from './views';
 import {
   Alert,
+  AlertId,
   AlertRepository
 } from './models';
 import {
@@ -24,7 +25,7 @@ function* createAlert<T>(next: G<T>): G<G<T>> {
 
 function* showAlert<T>(next: G<T>): G<G<T>> {
   const context: C & { params: { id: string }; } = this;
-  const alertId = context.params.id;
+  const alertId = new AlertId(context.params.id);
   const repository: AlertRepository = new AlertRepositoryImpl();
   const alert = repository.findBy({ alertId });
   context.response.body = renderAlert(alert);
@@ -32,7 +33,7 @@ function* showAlert<T>(next: G<T>): G<G<T>> {
 
 function* createAlertResult<T>(next: G<T>): G<G<T>> {
   const context: C & { params: { id: string }; } = this;
-  const alertId = context.params.id;
+  const alertId = new AlertId(context.params.id);
   const result = { alertId };
   context.response.body = renderAlertResult(result);
 }

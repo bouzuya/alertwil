@@ -1,13 +1,13 @@
 export class Alert {
-  private _id: string;
+  private _id: AlertId;
   private _groupId: string;
 
-  constructor({ id, groupId }: { id: string; groupId: string; }) {
+  constructor({ id, groupId }: { id: AlertId; groupId: string; }) {
     this._id = id;
     this._groupId = groupId;
   }
 
-  get id(): string {
+  get id(): AlertId {
     return this._id;
   }
 
@@ -16,8 +16,20 @@ export class Alert {
   }
 }
 
+export class AlertId {
+  private _id: string;
+
+  constructor(id: string) {
+    this._id = id;
+  }
+
+  equals(id: AlertId): boolean {
+    return this._id === id._id;
+  }
+}
+
 export interface AlertRepository {
-  findBy(query: { alertId?: string; }): Alert;
-  nextId(): string;
+  findBy(query: { alertId?: AlertId; }): Alert;
+  nextId(): AlertId;
   save(alert: Alert): void;
 }
