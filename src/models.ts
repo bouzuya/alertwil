@@ -1,8 +1,8 @@
 export class Alert {
   private _id: AlertId;
-  private _groupId: string;
+  private _groupId: GroupId;
 
-  constructor({ id, groupId }: { id: AlertId; groupId: string; }) {
+  constructor({ id, groupId }: { id: AlertId; groupId: GroupId; }) {
     this._id = id;
     this._groupId = groupId;
   }
@@ -11,7 +11,7 @@ export class Alert {
     return this._id;
   }
 
-  get groupId(): string {
+  get groupId(): GroupId {
     return this._groupId;
   }
 }
@@ -24,6 +24,18 @@ export class AlertId {
   }
 
   equals(id: AlertId): boolean {
+    return this._id === id._id;
+  }
+}
+
+export class GroupId {
+  private _id: string;
+
+  constructor(id: string) {
+    this._id = id;
+  }
+
+  equals(id: GroupId): boolean {
     return this._id === id._id;
   }
 }

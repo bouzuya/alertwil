@@ -6,7 +6,8 @@ import {
 import {
   Alert,
   AlertId,
-  AlertRepository
+  AlertRepository,
+  GroupId
 } from './models';
 import {
   AlertRepositoryImpl
@@ -14,7 +15,7 @@ import {
 
 function* createAlert<T>(next: G<T>): G<G<T>> {
   const context: C & { params: { id: string }; } = this;
-  const groupId = context.params.id;
+  const groupId = new GroupId(context.params.id);
   const alertRepository: AlertRepository = new AlertRepositoryImpl();
   const alertId = alertRepository.nextId();
   const alert = new Alert({ id: alertId, groupId });
