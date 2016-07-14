@@ -16,11 +16,11 @@ import {
 function* createAlert<T>(next: G<T>): G<G<T>> {
   const context: C & { params: { id: string }; } = this;
   const groupId = new GroupId(context.params.id);
-  const alertRepository: AlertRepository = new AlertRepositoryImpl();
-  const alertId = alertRepository.nextId();
+  const repository: AlertRepository = new AlertRepositoryImpl();
+  const alertId = repository.nextId();
   const alert = new Alert({ id: alertId, groupId });
   alert.call();
-  alertRepository.save(alert);
+  repository.save(alert);
   context.response.body = renderAlert(alert);
 }
 
@@ -35,7 +35,10 @@ function* showAlert<T>(next: G<T>): G<G<T>> {
 function* createAlertResult<T>(next: G<T>): G<G<T>> {
   const context: C & { params: { id: string }; } = this;
   const alertId = new AlertId(context.params.id);
-  const result = { alertId };
+  const repository: AlertRepository = new AlertRepositoryImpl();
+  const alert = repository.findBy({ alertId });
+  const result = alert.add('completed');
+  repository.save(alert);
   context.response.body = renderAlertResult(result);
 }
 

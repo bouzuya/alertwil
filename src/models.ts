@@ -15,6 +15,10 @@ export class Alert {
     return this._groupId;
   }
 
+  add(status: string): any {
+    // TODO: add result
+  }
+
   call(): void {
     // TODO: call twilio
   }
