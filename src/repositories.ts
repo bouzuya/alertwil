@@ -1,4 +1,4 @@
-import { AlertRepository } from './models';
+import { Alert, AlertRepository } from './models';
 
 export class AlertRepositoryImpl implements AlertRepository {
   findBy(query: { alertId?: string; }): Alert {
