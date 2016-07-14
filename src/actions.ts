@@ -4,6 +4,7 @@ import {
   alertResult as renderAlertResult
 } from './views';
 import {
+  Alert,
   AlertRepository
 } from './models';
 import {
@@ -13,7 +14,11 @@ import {
 function* createAlert<T>(next: G<T>): G<G<T>> {
   const context: C & { params: { id: string }; } = this;
   const groupId = context.params.id;
-  const alert = { groupId };
+  const alertRepository: AlertRepository = new AlertRepositoryImpl();
+  const alertId = alertRepository.nextId();
+  const alert = new Alert({ id: alertId, groupId });
+  // alert.call();
+  alertRepository.save(alert);
   context.response.body = renderAlert(alert);
 }
 
