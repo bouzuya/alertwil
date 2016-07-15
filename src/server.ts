@@ -1,3 +1,4 @@
+import * as bodyParser from 'koa-bodyparser';
 import { koa, G } from './koa';
 import { routes } from './routes';
 
@@ -11,6 +12,8 @@ const server = (): void => {
     const ms = new Date().getTime() - start;
     console.log('%s %s - %s', this.method, this.url, ms);
   });
+
+  app.use(bodyParser());
 
   app.use(routes());
 

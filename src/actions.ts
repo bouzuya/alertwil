@@ -35,31 +35,34 @@ class AlertApplicationService {
     return renderAlert(alert);
   }
 
-  createAlertResult(alertIdString: string): string {
+  createAlertResult(alertIdString: string, status: string): string {
     const alertId = new AlertId(alertIdString);
     const alert = this.repository.findBy({ alertId });
-    const result = alert.add('completed');
+    const result = alert.add(status);
     this.repository.save(alert);
     return renderAlertResult(result);
   }
 }
 
 function* createAlert<T>(next: G<T>): G<G<T>> {
-  const context: C & { params: { id: string }; } = this;
+  const context: C & { params: { id: string; }; } = this;
   const service = new AlertApplicationService(new AlertRepositoryImpl());
   context.response.body = service.createAlert(context.params.id);
 }
 
 function* showAlert<T>(next: G<T>): G<G<T>> {
-  const context: C & { params: { id: string }; } = this;
+  const context: C & { params: { id: string; }; } = this;
   const service = new AlertApplicationService(new AlertRepositoryImpl());
   context.response.body = service.showAlert(context.params.id);
 }
 
 function* createAlertResult<T>(next: G<T>): G<G<T>> {
-  const context: C & { params: { id: string }; } = this;
+  const context: C & { params: { id: string; }; } & {
+    request: { body: { [key: string]: string; } };
+  } = this;
   const service = new AlertApplicationService(new AlertRepositoryImpl());
-  context.response.body = service.createAlertResult(context.params.id);
+  const status = context.request.body['Status'];
+  context.response.body = service.createAlertResult(context.params.id, status);
 }
 
 export { createAlert, showAlert, createAlertResult };
