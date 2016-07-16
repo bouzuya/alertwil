@@ -12,3 +12,8 @@ declare module 'koa-router' {
   var router: any;
   export = router;
 }
+
+declare module 'twilio' {
+  var twilio: any;
+  export = twilio;
+}

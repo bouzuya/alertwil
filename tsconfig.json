@@ -16,6 +16,7 @@
     "./src/index.ts",
     "./test/index.ts",
     "./test/repositories.ts",
+    "./test/views.ts",
     "./typings/index.d.ts",
     "./typings.d.ts"
   ]
