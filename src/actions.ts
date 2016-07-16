@@ -7,6 +7,7 @@ import {
   Alert,
   AlertId,
   AlertRepository,
+  AlertResult,
   GroupId
 } from './models';
 import {
@@ -38,9 +39,11 @@ class AlertApplicationService {
   createAlertResult(alertIdString: string, status: string): string {
     const alertId = new AlertId(alertIdString);
     const alert = this.repository.findBy({ alertId });
-    const result = alert.add(status);
+    const result = new AlertResult(status);
+    alert.add(result);
+    if (!alert.result.completed) alert.call();
     this.repository.save(alert);
-    return renderAlertResult(result);
+    return renderAlertResult(alert.result);
   }
 }
 

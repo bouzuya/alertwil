@@ -1,10 +1,12 @@
 export class Alert {
   private _id: AlertId;
   private _groupId: GroupId;
+  private _results: AlertResult[];
 
   constructor({ id, groupId }: { id: AlertId; groupId: GroupId; }) {
     this._id = id;
     this._groupId = groupId;
+    this._results = [];
   }
 
   get id(): AlertId {
@@ -15,8 +17,12 @@ export class Alert {
     return this._groupId;
   }
 
-  add(status: string): any {
-    // TODO: add result
+  get result(): AlertResult {
+    return this._results[this._results.length - 1];
+  }
+
+  add(result: AlertResult): void {
+    this._results.push(result);
   }
 
   call(): void {
@@ -33,6 +39,18 @@ export class AlertId {
 
   equals(id: AlertId): boolean {
     return this._id === id._id;
+  }
+}
+
+export class AlertResult {
+  private _status: string;
+
+  constructor(status: string) {
+    this._status = status;
+  }
+
+  get completed(): boolean {
+    return this._status === 'Completed';
   }
 }
 
