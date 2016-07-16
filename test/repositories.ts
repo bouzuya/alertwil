@@ -15,4 +15,7 @@ test('repositories', () => {
   repository.save(alert);
   const found = repository.findBy({ alertId: alertId });
   assert.deepEqual(found, alert);
+  const otherAlertId = repository.nextId();
+  const notFound = repository.findBy({ alertId: otherAlertId });
+  assert(typeof notFound === 'undefined');
 });
