@@ -1,4 +1,4 @@
-import * as twilio from 'twilio';
+import { TwimlResponse } from 'twilio';
 
 // unused
 const render = (name: string, data: any): string => {
@@ -10,7 +10,7 @@ const render = (name: string, data: any): string => {
 };
 
 const alert = (_data: any): string => {
-  const r = new twilio.TwimlResponse();
+  const r = new TwimlResponse();
   const message = 'Mayday! '.repeat(3) + 'This is ' + 'Alertwil! '.repeat(3);
   r.say(message, { language: 'ja-JP' });
   return r.toString();

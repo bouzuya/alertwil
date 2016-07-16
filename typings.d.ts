@@ -14,6 +14,7 @@ declare module 'koa-router' {
 }
 
 declare module 'twilio' {
-  var twilio: any;
-  export = twilio;
+  export class TwimlResponse {
+    say: Function;
+  }
 }
