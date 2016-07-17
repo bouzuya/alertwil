@@ -1,5 +1,8 @@
 {
   "name": "alertwil",
+  "globalDependencies": {
+    "node": "registry:dt/node#6.0.0+20160709114037"
+  },
   "devDependencies": {
     "proxyquire": "registry:npm/proxyquire#1.0.0+20160211003958",
     "sinon": "registry:npm/sinon#1.16.0+20160427193336"
