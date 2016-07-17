@@ -14,6 +14,16 @@ declare module 'koa-router' {
 }
 
 declare module 'twilio' {
+  export class RestClient {
+    constructor(accountSid: string, authToken: string);
+    makeCall(params: {
+      from: string;
+      to: string;
+      url: string;
+      statusCallback: string;
+    }): Promise<void>;
+  }
+
   export class TwimlResponse {
     say: Function;
   }
