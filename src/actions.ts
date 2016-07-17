@@ -8,54 +8,61 @@ import {
   AlertId,
   AlertRepository,
   AlertResult,
-  GroupId
+  GroupId,
+  GroupRepository
 } from './models';
 import {
-  AlertRepositoryImpl
+  AlertRepositoryImpl,
+  GroupRepositoryImpl
 } from './repositories';
 
 class AlertApplicationService {
-  private repository: AlertRepository;
+  private _alertRepository: AlertRepository;
+  private _groupRepository: GroupRepository;
 
-  constructor(repository: AlertRepository) {
-    this.repository = repository;
+  constructor(repository: AlertRepository, groupRepository: GroupRepository) {
+    this._alertRepository = repository;
+    this._groupRepository = groupRepository;
   }
 
   createAlert(groupIdString: string): string {
     const groupId = new GroupId(groupIdString);
-    const alertId = this.repository.nextId();
-    const alert = new Alert({ id: alertId, groupId });
+    const group = this._groupRepository.findBy({ groupId });
+    const alertId = this._alertRepository.nextId();
+    const alert = new Alert({ id: alertId, group });
     alert.call();
-    this.repository.save(alert);
+    this._alertRepository.save(alert);
     return renderAlert(alert);
   }
 
   showAlert(alertIdString: string): string {
     const alertId = new AlertId(alertIdString);
-    const alert = this.repository.findBy({ alertId });
+    const alert = this._alertRepository.findBy({ alertId });
     return renderAlert(alert);
   }
 
   createAlertResult(alertIdString: string, status: string): string {
     const alertId = new AlertId(alertIdString);
-    const alert = this.repository.findBy({ alertId });
+    const alert = this._alertRepository.findBy({ alertId });
     const result = new AlertResult(status);
     alert.add(result);
     if (!alert.result.completed) alert.call();
-    this.repository.save(alert);
+    this._alertRepository.save(alert);
     return renderAlertResult(alert.result);
   }
 }
 
 function* createAlert<T>(next: G<T>): G<G<T>> {
   const context: C & { params: { id: string; }; } = this;
-  const service = new AlertApplicationService(new AlertRepositoryImpl());
+  const service = new AlertApplicationService(
+    new AlertRepositoryImpl(), new GroupRepositoryImpl());
   context.response.body = service.createAlert(context.params.id);
 }
 
 function* showAlert<T>(next: G<T>): G<G<T>> {
   const context: C & { params: { id: string; }; } = this;
-  const service = new AlertApplicationService(new AlertRepositoryImpl());
+  const service = new AlertApplicationService(
+    new AlertRepositoryImpl(), new GroupRepositoryImpl());
   context.response.body = service.showAlert(context.params.id);
 }
 
@@ -63,7 +70,8 @@ function* createAlertResult<T>(next: G<T>): G<G<T>> {
   const context: C & { params: { id: string; }; } & {
     request: { body: { [key: string]: string; } };
   } = this;
-  const service = new AlertApplicationService(new AlertRepositoryImpl());
+  const service = new AlertApplicationService(
+    new AlertRepositoryImpl(), new GroupRepositoryImpl());
   const status = context.request.body['Status'];
   context.response.body = service.createAlertResult(context.params.id, status);
 }

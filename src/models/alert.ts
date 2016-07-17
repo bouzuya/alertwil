@@ -2,7 +2,7 @@ import { RestClient } from 'twilio';
 import { process } from '../globals';
 import { AlertId } from './alert-id';
 import { AlertResult } from './alert-result';
-import { GroupId } from './group-id';
+import { Group } from './group';
 
 interface Config {
   accountSid: string;
@@ -12,26 +12,22 @@ interface Config {
 
 export class Alert {
   private _id: AlertId;
-  private _groupId: GroupId;
+  private _group: Group;
   private _results: AlertResult[];
   private _targets: {
     number: string;
   }[];
 
-  constructor({ id, groupId }: { id: AlertId; groupId: GroupId; }) {
+  constructor({ id, group }: { id: AlertId; group: Group; }) {
     this._id = id;
-    this._groupId = groupId;
+    this._group = group;
     this._results = [];
-    this._targets = []; // FIXME: this._targets = group.users.slice();
+    this._targets = group.users.slice();
     if (this._targets.length === 0) throw new Error();
   }
 
   get id(): AlertId {
     return this._id;
-  }
-
-  get groupId(): GroupId {
-    return this._groupId;
   }
 
   get result(): AlertResult {
