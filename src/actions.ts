@@ -76,4 +76,19 @@ function* createAlertResult<T>(next: G<T>): G<G<T>> {
   context.response.body = service.createAlertResult(context.params.id, status);
 }
 
-export { createAlert, showAlert, createAlertResult };
+const actions = (): <T>(next: G<T>) => G<G<T>> => {
+  return function* <T>(next: G<T>): G<G<T>> {
+    switch (this.request.params.name) {
+      case 'alerts#create':
+        return createAlert(next);
+      case 'alerts#show':
+        return showAlert(next);
+      case 'alert/results#create':
+        return createAlertResult(next);
+      default:
+        throw new Error();
+    }
+  };
+};
+
+export { actions };
