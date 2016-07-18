@@ -8,6 +8,11 @@ declare module 'koa-bodyparser' {
   export = bodyParser;
 }
 
+declare module 'koa-logger' {
+  var logger: any;
+  export = logger;
+}
+
 declare module 'koa-router' {
   var router: any;
   export = router;
