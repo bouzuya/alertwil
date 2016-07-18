@@ -1,5 +1,16 @@
 # alertwil
 
+## How to run
+
+```
+$ git clone https://github.com/bouzuya/alertwil
+$ cd alertwil/
+$ npm install
+$ cp _envrc .envrc
+$ source .envrc # or use direnv
+$ npm start
+```
+
 ## Routes
 
 - POST /groups/{group_id}/alerts
