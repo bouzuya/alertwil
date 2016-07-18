@@ -10,7 +10,7 @@ const routes = (): any => {
   const router = koaRouter();
   routesConfig.forEach(([method, path, name]) => {
     router[method](path, function* <T>(next: G<T>): G<G<T>> {
-      this.request.params.name = name;
+      this.actionName = name;
       yield next;
     });
   });

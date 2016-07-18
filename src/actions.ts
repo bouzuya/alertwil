@@ -78,7 +78,7 @@ function* createAlertResult<T>(next: G<T>): G<G<T>> {
 
 const actions = (): <T>(next: G<T>) => G<G<T>> => {
   return function* <T>(next: G<T>): G<G<T>> {
-    switch (this.request.params.name) {
+    switch (this.actionName) {
       case 'alerts#create':
         return createAlert(next);
       case 'alerts#show':
