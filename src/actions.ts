@@ -88,7 +88,7 @@ const actions = (): <T>(next: G<T>) => G<G<T>> => {
     loaderOptions: { file: '_config.json' }
   });
   const service = new AlertApplicationService(
-    new AlertRepositoryImpl(), new GroupRepositoryImpl());
+    new AlertRepositoryImpl(), new GroupRepositoryImpl(config));
   return function* <T>(next: G<T>): G<G<T>> {
     switch (this.actionName) {
       case 'alerts#create':

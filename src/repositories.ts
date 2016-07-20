@@ -4,8 +4,6 @@ import {
 } from './models';
 
 const alerts: Alert[] = [];
-const groups: Group[] = [];
-const _storage = { alerts, groups }; // FIXME
 
 export class AlertRepositoryImpl implements AlertRepository {
   findBy(query: { alertId?: AlertId; }): Alert {
@@ -23,10 +21,14 @@ export class AlertRepositoryImpl implements AlertRepository {
 }
 
 export class GroupRepositoryImpl implements GroupRepository {
+  private _groups: Group[];
+
+  constructor(groups: Group[]) {
+    this._groups = groups;
+  }
+
   findBy(query: { groupId?: GroupId; }): Group {
     const { groupId } = query;
-    return groups.find((group) => group.id.equals(groupId));
+    return this._groups.find((group) => group.id.equals(groupId));
   }
 }
-
-export { _storage };

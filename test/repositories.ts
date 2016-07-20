@@ -5,8 +5,7 @@ import * as sinon from 'sinon';
 import { Alert, Group, GroupId, User } from '../src/models';
 import {
   AlertRepositoryImpl,
-  GroupRepositoryImpl,
-  _storage
+  GroupRepositoryImpl
 } from '../src/repositories';
 
 const { test } = beater();
@@ -14,9 +13,10 @@ const { test } = beater();
 test('repositories', () => {
   const groupId = new GroupId('456');
   const user = new User({ id: '123', number: '+810000000000' });
-  _storage.groups.push(new Group({ id: groupId, users: [user] }));
   const alertRepository = new AlertRepositoryImpl();
-  const groupRepository = new GroupRepositoryImpl();
+  const groupRepository = new GroupRepositoryImpl([
+    new Group({ id: groupId, users: [user] })
+  ]);
   const group = groupRepository.findBy({ groupId });
   const alertId = alertRepository.nextId();
   const alert = new Alert({ id: alertId, group })
