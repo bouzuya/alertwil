@@ -1,6 +1,7 @@
 {
   "name": "alertwil",
   "globalDependencies": {
+    "aws-sdk": "registry:dt/aws-sdk#0.0.0+20160709061101",
     "node": "registry:dt/node#6.0.0+20160709114037"
   },
   "devDependencies": {
