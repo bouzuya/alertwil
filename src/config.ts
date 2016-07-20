@@ -1,4 +1,4 @@
-import { fs } from './loaders';
+import { fs, s3 } from './loaders';
 import { Promise } from './globals';
 import { Group, GroupId, User, Config } from './models';
 
@@ -24,12 +24,13 @@ const load = (
     loaderOptions: any;
   }
 ): Promise<Group[]> => {
-  // TODO:
-  const loadConfig = fs;
-  const loadConfigOptions = { file: options.loaderOptions.file };
-  return loadConfig(loadConfigOptions).then((config) => {
-    return loadGroups(config);
-  });
+  const { loader: loaderType, loaderOptions } = options || {
+    loader: 'fs',
+    loaderOptions: { file: 'config.json' }
+  };
+  const loader = loaderType === 'fs' ? fs : s3;
+  const promise: Promise<Config> = loader.call(this, loaderOptions);
+  return promise.then((config) => loadGroups(config));
 };
 
 export { load };
