@@ -1,4 +1,4 @@
 const myProcess = global.process;
-const myPromise = global.Promise;
+const myPromise = Promise;
 
 export { myProcess as process, myPromise as Promise };
