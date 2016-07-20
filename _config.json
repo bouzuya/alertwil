@@ -1,0 +1,10 @@
+{
+  "users": [
+    { "id": "bouzuya", "number": "+810000000000"},
+    { "id": "emanon001", "number": "+811111111111"}
+  ],
+  "groups": [
+    { "id": "group1", "users": ["bouzuya"] },
+    { "id": "group2", "users": ["bouzuya", "emanon001"] }
+  ]
+}
