@@ -2,7 +2,7 @@ import * as assert from 'power-assert';
 import beater from 'beater';
 import * as proxyquire from 'proxyquire';
 import * as sinon from 'sinon';
-import { Alert, Group, GroupId } from '../src/models';
+import { Alert, Group, GroupId, User } from '../src/models';
 import {
   AlertRepositoryImpl,
   GroupRepositoryImpl,
@@ -13,9 +13,8 @@ const { test } = beater();
 
 test('repositories', () => {
   const groupId = new GroupId('456');
-  _storage.groups.push(
-    new Group({ id: groupId, users: [{ number: '+810000000000' }] }));
-
+  const user = new User({ id: '123', number: '+810000000000' });
+  _storage.groups.push(new Group({ id: groupId, users: [user] }));
   const alertRepository = new AlertRepositoryImpl();
   const groupRepository = new GroupRepositoryImpl();
   const group = groupRepository.findBy({ groupId });

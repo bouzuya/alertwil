@@ -1,12 +1,11 @@
 import { GroupId } from './group-id';
+import { User } from './user';
 
 export class Group {
   private _id: GroupId;
-  private _users: {
-    number: string;
-  }[];
+  private _users: User[];
 
-  constructor({ id, users }: { id: GroupId; users: { number: string; }[] }) {
+  constructor({ id, users }: { id: GroupId; users: User[] }) {
     this._id = id;
     this._users = users;
   }
@@ -15,7 +14,7 @@ export class Group {
     return this._id;
   }
 
-  get users(): { number: string; }[] {
+  get users(): User[] {
     return this._users;
   }
 }
