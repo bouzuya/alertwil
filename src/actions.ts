@@ -8,12 +8,10 @@ import {
   AlertId,
   AlertRepository,
   AlertResult,
+  Group,
   GroupId,
   GroupRepository
 } from './models';
-import {
-  load as loadConfig
-} from './config';
 import {
   AlertRepositoryImpl,
   GroupRepositoryImpl
@@ -82,13 +80,9 @@ function* createAlertResult<T>(
   context.response.body = service.createAlertResult(context.params.id, status);
 }
 
-const actions = (): <T>(next: G<T>) => G<G<T>> => {
-  const config = loadConfig({
-    loader: 'fs',
-    loaderOptions: { file: '_config.json' }
-  });
+const actions = (groups: Group[]): <T>(next: G<T>) => G<G<T>> => {
   const service = new AlertApplicationService(
-    new AlertRepositoryImpl(), new GroupRepositoryImpl(config));
+    new AlertRepositoryImpl(), new GroupRepositoryImpl(groups));
   return function* <T>(next: G<T>): G<G<T>> {
     switch (this.actionName) {
       case 'alerts#create':
