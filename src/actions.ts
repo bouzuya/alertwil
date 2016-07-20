@@ -52,39 +52,44 @@ class AlertApplicationService {
   }
 }
 
-function* createAlert<T>(next: G<T>): G<G<T>> {
+function* createAlert<T>(
+  service: AlertApplicationService,
+  next: G<T>
+): G<G<T>> {
   const context: C & { params: { id: string; }; } = this;
-  const service = new AlertApplicationService(
-    new AlertRepositoryImpl(), new GroupRepositoryImpl());
   context.response.body = service.createAlert(context.params.id);
 }
 
-function* showAlert<T>(next: G<T>): G<G<T>> {
+function* showAlert<T>(
+  service: AlertApplicationService,
+  next: G<T>
+): G<G<T>> {
   const context: C & { params: { id: string; }; } = this;
-  const service = new AlertApplicationService(
-    new AlertRepositoryImpl(), new GroupRepositoryImpl());
   context.response.body = service.showAlert(context.params.id);
 }
 
-function* createAlertResult<T>(next: G<T>): G<G<T>> {
+function* createAlertResult<T>(
+  service: AlertApplicationService,
+  next: G<T>
+): G<G<T>> {
   const context: C & { params: { id: string; }; } & {
     request: { body: { [key: string]: string; } };
   } = this;
-  const service = new AlertApplicationService(
-    new AlertRepositoryImpl(), new GroupRepositoryImpl());
   const status = context.request.body['Status'];
   context.response.body = service.createAlertResult(context.params.id, status);
 }
 
 const actions = (): <T>(next: G<T>) => G<G<T>> => {
+  const service = new AlertApplicationService(
+    new AlertRepositoryImpl(), new GroupRepositoryImpl());
   return function* <T>(next: G<T>): G<G<T>> {
     switch (this.actionName) {
       case 'alerts#create':
-        return createAlert(next);
+        return createAlert(service, next);
       case 'alerts#show':
-        return showAlert(next);
+        return showAlert(service, next);
       case 'alert/results#create':
-        return createAlertResult(next);
+        return createAlertResult(service, next);
       default:
         throw new Error();
     }
