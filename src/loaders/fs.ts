@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { Promise } from '../globals';
 import { Config } from '../models';
 
 const load = ({ file }: { file: string; }): Promise<Config> => {

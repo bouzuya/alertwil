@@ -1,4 +1,5 @@
 import { fs } from './loaders';
+import { Promise } from './globals';
 import { Group, GroupId, User, Config } from './models';
 
 const loadGroups = (config: Config): Group[] => {
