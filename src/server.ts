@@ -6,16 +6,17 @@ import { actions } from './actions';
 import { load as loadConfig } from './config';
 
 const server = (): void => {
-  const groups = loadConfig({
+  loadConfig({
     loader: 'fs',
     loaderOptions: { file: '_config.json' }
+  }).then((groups) => {
+    const app = koa();
+    app.use(koaLogger());
+    app.use(bodyParser());
+    app.use(routes());
+    app.use(actions(groups));
+    app.listen(3000);
   });
-  const app = koa();
-  app.use(koaLogger());
-  app.use(bodyParser());
-  app.use(routes());
-  app.use(actions(groups));
-  app.listen(3000);
 };
 
 export { server };

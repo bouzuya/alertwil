@@ -17,11 +17,18 @@ const loadGroups = (config: Config): Group[] => {
   });
 };
 
-const load = (options: { loader: string; loaderOptions: any; }): any => {
+const load = (
+  options: {
+    loader: string;
+    loaderOptions: any;
+  }
+): Promise<Group[]> => {
   // TODO:
   const loadConfig = fs;
   const loadConfigOptions = { file: options.loaderOptions.file };
-  return loadGroups(loadConfig(loadConfigOptions));
+  return loadConfig(loadConfigOptions).then((config) => {
+    return loadGroups(config);
+  });
 };
 
 export { load };
