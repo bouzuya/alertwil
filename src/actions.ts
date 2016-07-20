@@ -12,6 +12,9 @@ import {
   GroupRepository
 } from './models';
 import {
+  load as loadConfig
+} from './config';
+import {
   AlertRepositoryImpl,
   GroupRepositoryImpl
 } from './repositories';
@@ -80,6 +83,10 @@ function* createAlertResult<T>(
 }
 
 const actions = (): <T>(next: G<T>) => G<G<T>> => {
+  const config = loadConfig({
+    loader: 'fs',
+    loaderOptions: { file: '_config.json' }
+  });
   const service = new AlertApplicationService(
     new AlertRepositoryImpl(), new GroupRepositoryImpl());
   return function* <T>(next: G<T>): G<G<T>> {
