@@ -86,11 +86,14 @@ const actions = (groups: Group[]): <T>(next: G<T>) => G<G<T>> => {
   return function* <T>(next: G<T>): G<G<T>> {
     switch (this.actionName) {
       case 'alerts#create':
-        return createAlert(service, next);
+        yield createAlert.call(this, service, next);
+        break;
       case 'alerts#show':
-        return showAlert(service, next);
+        yield showAlert.call(this, service, next);
+        break;
       case 'alert/results#create':
-        return createAlertResult(service, next);
+        yield createAlertResult.call(this, service, next);
+        break;
       default:
         throw new Error();
     }
