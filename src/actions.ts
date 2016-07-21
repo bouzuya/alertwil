@@ -76,7 +76,7 @@ function* createAlertResult<T>(
   const context: C & { params: { id: string; }; } & {
     request: { body: { [key: string]: string; } };
   } = this;
-  const status = context.request.body['Status'];
+  const status = context.request.body['CallStatus'];
   context.response.body = service.createAlertResult(context.params.id, status);
 }
 

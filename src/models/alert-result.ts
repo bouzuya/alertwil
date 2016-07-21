@@ -6,6 +6,6 @@ export class AlertResult {
   }
 
   get completed(): boolean {
-    return this._status === 'Completed';
+    return this._status === 'completed';
   }
 }
