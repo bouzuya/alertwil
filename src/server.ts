@@ -17,7 +17,7 @@ const server = (): void => {
     app.use(bodyParser());
     app.use(routes());
     app.use(actions(groups));
-    app.listen(3000);
+    app.listen(parseInt(process.env.PORT ? process.env.PORT : '3000', 10));
   }, (error) => {
     console.error(error);
   });
