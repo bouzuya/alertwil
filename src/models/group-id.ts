@@ -8,4 +8,8 @@ export class GroupId {
   equals(id: GroupId): boolean {
     return this._id === id._id;
   }
+
+  toString(): string {
+    return this._id;
+  }
 }

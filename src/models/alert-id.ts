@@ -8,4 +8,8 @@ export class AlertId {
   equals(id: AlertId): boolean {
     return this._id === id._id;
   }
+
+  toString(): string {
+    return this._id;
+  }
 }
