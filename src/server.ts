@@ -7,8 +7,10 @@ import { load as loadConfig } from './config';
 
 const server = (): void => {
   loadConfig({
-    loader: 'fs',
-    loaderOptions: { file: '_config.json' }
+    loader: process.env.LOADER_TYPE,
+    loaderOptions: JSON.parse(
+      process.env.LOADER_OPTIONS ? process.env.LOADER_OPTIONS : '{}'
+    )
   }).then((groups) => {
     const app = koa();
     app.use(koaLogger());
