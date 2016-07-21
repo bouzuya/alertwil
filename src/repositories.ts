@@ -16,7 +16,12 @@ export class AlertRepositoryImpl implements AlertRepository {
   }
 
   save(alert: Alert): void {
-    alerts.push(alert);
+    const index = alerts.findIndex((i) => i.id.equals(alert.id));
+    if (index < 0) {
+      alerts.push(alert);
+    } else {
+      alerts.splice(index, 1, alert);
+    }
   }
 }
 
