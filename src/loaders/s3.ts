@@ -24,7 +24,11 @@ const load = ({
       apiVersion: '2006-03-01'
     });
     return s3.getObject({ Bucket: bucket, Key: key }, (error, data) => {
-      return JSON.parse(data.Body);
+      if (error) {
+        reject(error);
+      } else {
+        resolve(JSON.parse(data.Body));
+      }
     });
   });
 };

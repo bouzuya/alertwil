@@ -18,6 +18,8 @@ const server = (): void => {
     app.use(routes());
     app.use(actions(groups));
     app.listen(3000);
+  }, (error) => {
+    console.error(error);
   });
 };
 
