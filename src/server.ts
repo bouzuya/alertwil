@@ -20,7 +20,9 @@ const server = (): void => {
     app.use(function* <T>(next: G<T>): G<G<T>> {
       const actionName: string = this.actionName;
       const params: string = JSON.stringify(this.params);
-      console.log(`  action name=${actionName}, params=${params}`);
+      const body: string = JSON.stringify(this.request.body);
+      console.log(
+        `  action name=${actionName}, params=${params}, body=${body}`);
       yield next;
     });
     app.use(actions(groups));
