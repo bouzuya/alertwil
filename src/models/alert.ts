@@ -58,7 +58,9 @@ export class Alert {
     const to = calleeNumber;
     const url = messageUrl;
     const statusCallback = callbackUrl;
-    const promise = client.makeCall({ from, to, url, statusCallback });
-    return void promise;
+    const params = { from, to, url, statusCallback };
+    console.log(JSON.stringify(params));
+    const promise = client.makeCall(params);
+    return void promise.catch((error) => console.error(error));
   }
 }
