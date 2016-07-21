@@ -23,7 +23,9 @@ const server = (): void => {
       yield next;
     });
     app.use(actions(groups));
-    app.listen(parseInt(process.env.PORT ? process.env.PORT : '3000', 10));
+    const port = parseInt(process.env.PORT ? process.env.PORT : '3000', 10);
+    app.listen(port);
+    console.log(`start: port=${port}`);
   }, (error) => {
     console.error(error);
   });
