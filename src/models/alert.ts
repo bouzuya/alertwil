@@ -42,8 +42,8 @@ export class Alert {
     // FIXME
     const target = this._targets[this._results.length % this._targets.length];
     const calleeNumber = target.number;
-    const messageUrl = `http://example.com/alerts/${this._id}`;
-    const callbackUrl = `http://example.com/alerts/${this._id}/results`;
+    const messageUrl = `${process.env.BASE_URL}/alerts/${this._id}`;
+    const callbackUrl = `${process.env.BASE_URL}/alerts/${this._id}/results`;
 
     const config: Config = {
       accountSid: process.env.ACCOUNT_SID,
