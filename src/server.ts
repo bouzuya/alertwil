@@ -12,6 +12,7 @@ const server = (): void => {
       process.env.LOADER_OPTIONS ? process.env.LOADER_OPTIONS : '{}'
     )
   }).then((groups) => {
+    console.log(`config: ${JSON.stringify(groups)}`);
     const app = koa();
     app.use(koaLogger());
     app.use(bodyParser());
