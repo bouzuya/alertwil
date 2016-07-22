@@ -1,6 +1,6 @@
 {
   "name": "alertwil",
-  "description": "alertwil",
+  "description": "An alert notification system using Twilio",
   "version": "0.0.0",
   "author": {
     "name": "bouzuya",

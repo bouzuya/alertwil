@@ -1,5 +1,7 @@
 # alertwil
 
+An alert notification system using [Twilio](https://www.twilio.com/).
+
 ## How to run
 
 ```
