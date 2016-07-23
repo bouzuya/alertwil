@@ -41,6 +41,14 @@ $ npm start
   - alert/results#create { alertId }
   - call by twilio server
 
+
+## Badges
+
+[![Travis CI][travisci-badge-url]][travisci-url]
+
+[travisci-badge-url]: https://travis-ci.org/bouzuya/alertwil.svg?branch=master
+[travisci-url]: https://travis-ci.org/bouzuya/alertwil
+
 ## License
 
 [MIT](LICENSE)
