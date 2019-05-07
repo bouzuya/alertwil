@@ -1,13 +1,9 @@
-import * as assert from 'power-assert';
-import beater from 'beater';
-import * as proxyquire from 'proxyquire';
-import * as sinon from 'sinon';
+import { Test, run } from 'beater';
+import { tests as repositoriesTests } from './repositories';
+import { tests as viewsTests } from './views';
 
-const { test } = beater();
+const tests = ([] as Test[])
+  .concat(repositoriesTests)
+  .concat(viewsTests);
 
-test('index', () => {
-  assert(assert);
-  assert(proxyquire);
-  assert(sinon);
-  assert(1 === 1);
-});
+run(tests).catch(() => process.exit(1));
