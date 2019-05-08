@@ -1,5 +1,5 @@
-.envrc
-.tmp/
-lib/
-node_modules/
-typings/
+/.env*
+/.tmp/
+/config.json
+/lib/
+/node_modules/
