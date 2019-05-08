@@ -22,7 +22,7 @@ const server = async (): Promise<void> => {
   const app = express();
   app.use(morgan('combined'));
   app.use(express.json());
-  app.use(express.urlencoded());
+  app.use(express.urlencoded({ extended: false }));
   app.use(routes());
   app.use((request: RoutedRequest, _, next) => {
     const actionName = request.actionName;
