@@ -1,4 +1,4 @@
-import * as assert from 'power-assert';
+import assert from 'power-assert';
 import { test } from 'beater';
 import { Alert, Group, GroupId, User } from '../src/models';
 import {
@@ -15,6 +15,8 @@ const tests = [
       new Group({ id: groupId, users: [user] })
     ]);
     const group = groupRepository.findBy({ groupId });
+    // TODO
+    if (group === null) throw new Error('group not found');
     const alertId = alertRepository.nextId();
     const alert = new Alert({ id: alertId, group })
     alertRepository.save(alert);
@@ -22,7 +24,7 @@ const tests = [
     assert.deepEqual(found, alert);
     const unsavedAlertId = alertRepository.nextId();
     const notFound = alertRepository.findBy({ alertId: unsavedAlertId });
-    assert(typeof notFound === 'undefined');
+    assert(notFound === null);
   })
 ];
 

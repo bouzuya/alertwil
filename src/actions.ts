@@ -1,4 +1,4 @@
-import { G, C } from './koa';
+import express from 'express';
 import {
   alert as renderAlert,
   alertResult as renderAlertResult
@@ -16,6 +16,7 @@ import {
   AlertRepositoryImpl,
   GroupRepositoryImpl
 } from './repositories';
+import { RoutedRequest } from './routes';
 
 class AlertApplicationService {
   private _alertRepository: AlertRepository;
@@ -29,6 +30,8 @@ class AlertApplicationService {
   createAlert(groupIdString: string): string {
     const groupId = new GroupId(groupIdString);
     const group = this._groupRepository.findBy({ groupId });
+    // TODO
+    if (group === null) throw new Error('group not found');
     const alertId = this._alertRepository.nextId();
     const alert = new Alert({ id: alertId, group });
     alert.call();
@@ -45,6 +48,8 @@ class AlertApplicationService {
   createAlertResult(alertIdString: string, status: string): string {
     const alertId = new AlertId(alertIdString);
     const alert = this._alertRepository.findBy({ alertId });
+    // TODO
+    if (alert === null) throw new Error('alert not found');
     const result = new AlertResult(status);
     alert.add(result);
     if (!alert.result.completed) alert.call();
@@ -53,47 +58,45 @@ class AlertApplicationService {
   }
 }
 
-function* createAlert<T>(
+const createAlert = (
   service: AlertApplicationService,
-  next: G<T>
-): G<G<T>> {
-  const context: C & { params: { id: string; }; } = this;
-  context.response.body = service.createAlert(context.params.id);
-}
+  request: RoutedRequest,
+  response: express.Response
+): void => {
+  const id = request.params.id;
+  response.send(service.createAlert(id));
+};
 
-function* showAlert<T>(
+const showAlert = (
   service: AlertApplicationService,
-  next: G<T>
-): G<G<T>> {
-  const context: C & { params: { id: string; }; } = this;
-  context.response.body = service.showAlert(context.params.id);
-}
+  request: RoutedRequest,
+  response: express.Response
+): void => {
+  const id = request.params.id;
+  response.send(service.showAlert(id));
+};
 
-function* createAlertResult<T>(
+const createAlertResult = (
   service: AlertApplicationService,
-  next: G<T>
-): G<G<T>> {
-  const context: C & { params: { id: string; }; } & {
-    request: { body: { [key: string]: string; } };
-  } = this;
-  const status = context.request.body['CallStatus'];
-  context.response.body = service.createAlertResult(context.params.id, status);
-}
+  request: RoutedRequest,
+  response: express.Response
+): void => {
+  const status = request.body['CallStatus'];
+  const id = request.params.id
+  response.send(service.createAlertResult(id, status));
+};
 
-const actions = (groups: Group[]): <T>(next: G<T>) => G<G<T>> => {
+const actions = (groups: Group[]) => {
   const service = new AlertApplicationService(
     new AlertRepositoryImpl(), new GroupRepositoryImpl(groups));
-  return function* <T>(next: G<T>): G<G<T>> {
-    switch (this.actionName) {
+  return (request: RoutedRequest, response: express.Response): void => {
+    switch (request.actionName) {
       case 'alerts#create':
-        yield createAlert.call(this, service, next);
-        break;
+        return createAlert(service, request, response);
       case 'alerts#show':
-        yield showAlert.call(this, service, next);
-        break;
+        return showAlert(service, request, response);
       case 'alert/results#create':
-        yield createAlertResult.call(this, service, next);
-        break;
+        return createAlertResult(service, request, response);
       default:
         throw new Error();
     }

@@ -6,9 +6,11 @@ import {
 const alerts: Alert[] = [];
 
 export class AlertRepositoryImpl implements AlertRepository {
-  findBy(query: { alertId?: AlertId; }): Alert {
+  findBy(query: { alertId?: AlertId; }): Alert | null {
     const { alertId } = query;
-    return alerts.find((alert) => alert.id.equals(alertId));
+    if (typeof alertId === 'undefined') return null;
+    const found = alerts.find((alert) => alert.id.equals(alertId));
+    return typeof found === 'undefined' ? null : found;
   }
 
   nextId(): AlertId {
@@ -32,8 +34,10 @@ export class GroupRepositoryImpl implements GroupRepository {
     this._groups = groups;
   }
 
-  findBy(query: { groupId?: GroupId; }): Group {
+  findBy(query: { groupId?: GroupId; }): Group | null {
     const { groupId } = query;
-    return this._groups.find((group) => group.id.equals(groupId));
+    if (typeof groupId === 'undefined') return null;
+    const found = this._groups.find((group) => group.id.equals(groupId));
+    return typeof found === 'undefined' ? null : found;
   }
 }

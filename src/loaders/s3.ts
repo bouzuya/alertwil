@@ -1,4 +1,4 @@
-import * as AWS from 'aws-sdk';
+import { S3 } from 'aws-sdk';
 import { Promise } from '../globals';
 import { Config } from '../models';
 
@@ -18,18 +18,20 @@ const load = ({
   region
 }: S3LoaderOptions): Promise<Config> => {
   return new Promise((resolve, reject) => {
-    const s3 = new AWS.S3({
+    const s3 = new S3({
       accessKeyId, secretAccessKey,
       region: region || 'ap-northeast-1',
       apiVersion: '2006-03-01'
     });
-    return s3.getObject({ Bucket: bucket, Key: key }, (error, data) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(JSON.parse(data.Body));
-      }
-    });
+    return s3.getObject(
+      { Bucket: bucket, Key: key },
+      (error: any, data: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(JSON.parse(data.Body));
+        }
+      });
   });
 };
 

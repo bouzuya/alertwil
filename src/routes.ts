@@ -1,20 +1,19 @@
-import { G } from './koa';
-import * as koaRouter from 'koa-router';
+import express from 'express';
 
-const routes = (): any => {
-  const routesConfig = [
-    ['post', '/groups/:id/alerts', 'alerts#create'],
-    ['get', '/alerts/:id', 'alerts#show'],
-    ['post', '/alerts/:id/results', 'alert/results#create']
-  ];
-  const router = koaRouter();
-  routesConfig.forEach(([method, path, name]) => {
-    router[method](path, function* <T>(next: G<T>): G<G<T>> {
-      this.actionName = name;
-      yield next;
-    });
-  });
-  return router.routes();
+type ActionName = string & { _: 'ActionName' };
+type RoutedRequest = express.Request & { actionName?: ActionName; }
+
+const routes = (): express.Router => {
+  const router = express.Router({ caseSensitive: true, strict: true });
+  const action = (name: string): express.RequestHandler =>
+    (request, _response, next) => {
+      (request as RoutedRequest).actionName = name as ActionName;
+      next();
+    };
+  router.post('/groups/:id/alerts', action('alerts#create'));
+  router.get('/alerts/:id', action('alerts#show'));
+  router.post('/alerts/:id/results', action('alert/results#create'));
+  return router;
 };
 
-export { routes };
+export { ActionName, RoutedRequest, routes };

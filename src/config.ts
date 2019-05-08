@@ -1,5 +1,4 @@
 import { fs, s3 } from './loaders';
-import { Promise } from './globals';
 import { Group, GroupId, User, Config } from './models';
 
 const loadGroups = (config: Config): Group[] => {
@@ -18,9 +17,9 @@ const loadGroups = (config: Config): Group[] => {
   });
 };
 
-const load = (
-  options: {
-    loader: string;
+const load = async (
+  options?: {
+    loader: 'fs' | 's3';
     loaderOptions: any;
   }
 ): Promise<Group[]> => {
@@ -29,8 +28,8 @@ const load = (
     loaderOptions: { file: 'config.json' }
   };
   const loader = loaderType === 'fs' ? fs : s3;
-  const promise: Promise<Config> = loader.call(this, loaderOptions);
-  return promise.then((config) => loadGroups(config));
+  const config = await loader(loaderOptions);
+  return loadGroups(config);
 };
 
 export { load };

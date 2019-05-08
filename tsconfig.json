@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
+    "esModuleInterop": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -10,14 +12,13 @@
     "removeComments": true,
     "rootDir": ".",
     "sourceMap": false,
+    "strict": true,
     "target": "es2015"
   },
   "files": [
     "./src/index.ts",
     "./test/index.ts",
     "./test/repositories.ts",
-    "./test/views.ts",
-    "./typings/index.d.ts",
-    "./typings.d.ts"
+    "./test/views.ts"
   ]
 }

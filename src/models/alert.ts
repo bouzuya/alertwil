@@ -1,4 +1,4 @@
-import { RestClient } from 'twilio';
+import { Twilio } from 'twilio';
 import { process } from '../globals';
 import { AlertId } from './alert-id';
 import { AlertResult } from './alert-result';
@@ -45,14 +45,23 @@ export class Alert {
     const messageUrl = `${process.env.BASE_URL}/alerts/${this._id}`;
     const callbackUrl = `${process.env.BASE_URL}/alerts/${this._id}/results`;
 
+    const accountSidOrUndefined = process.env.ACCOUNT_SID;
+    if (typeof accountSidOrUndefined === 'undefined')
+      throw new Error('ACCOUNT_SID');
+    const authTokenOrUndefined = process.env.AUTH_TOKEN;
+    if (typeof authTokenOrUndefined === 'undefined')
+      throw new Error('AUTH_TOKEN');
+    const callerNumberOrUndefined = process.env.CALLER_NUMBER;
+    if (typeof callerNumberOrUndefined === 'undefined')
+      throw new Error('CALLER_NUMBER');
     const config: Config = {
-      accountSid: process.env.ACCOUNT_SID,
-      authToken: process.env.AUTH_TOKEN,
-      callerNumber: process.env.CALLER_NUMBER
+      accountSid: accountSidOrUndefined,
+      authToken: authTokenOrUndefined,
+      callerNumber: callerNumberOrUndefined
     };
     const accountSid = config.accountSid;
     const authToken = config.authToken;
-    const client = new RestClient(accountSid, authToken);
+    const client = new Twilio(accountSid, authToken);
 
     const from = config.callerNumber;
     const to = calleeNumber;
@@ -60,7 +69,7 @@ export class Alert {
     const statusCallback = callbackUrl;
     const params = { from, to, url, statusCallback };
     console.log(JSON.stringify(params));
-    const promise = client.makeCall(params);
+    const promise = client.messages.create(params);
     return void promise.catch((error) => console.error(error));
   }
 }
