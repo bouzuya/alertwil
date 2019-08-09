@@ -1,7 +1,7 @@
 {
   "name": "alertwil",
   "description": "An alert notification system using Twilio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "bouzuya <m@bouzuya.net> (https://bouzuya.net/)",
   "babel": {
     "presets": [
