@@ -2,11 +2,7 @@
   "name": "alertwil",
   "description": "An alert notification system using Twilio",
   "version": "0.2.0",
-  "author": {
-    "name": "bouzuya",
-    "email": "m@bouzuya.net",
-    "url": "http://bouzuya.net/"
-  },
+  "author": "bouzuya <m@bouzuya.net> (https://bouzuya.net/)",
   "babel": {
     "presets": [
       [
@@ -53,7 +49,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/bouzuya/alertwil.git"
+    "url": "git+https://github.com/bouzuya/alertwil.git"
   },
   "scripts": {
     "build": "npm-run-all -s 'build:ts' 'build:es2015' 'build:lib'",
