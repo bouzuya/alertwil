@@ -46,7 +46,7 @@ $ npm start
 
 [![Travis CI][travisci-badge-url]][travisci-url]
 
-[travisci-badge-url]: https://travis-ci.org/bouzuya/alertwil.svg?branch=master
+[travisci-badge-url]: https://img.shields.io/travis/bouzuya/alertwil.svg
 [travisci-url]: https://travis-ci.org/bouzuya/alertwil
 
 ## License
